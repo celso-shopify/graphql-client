@@ -73,7 +73,7 @@ module GraphQL
 
         cache = {}
         schema.types.each do |name, type|
-          next if name.start_with?("__")
+          next if name.start_with?("__") || name.start_with?("String")
           if klass = class_for(schema, type, cache)
             klass.schema_module = mod
             mod.set_class(name, klass)
