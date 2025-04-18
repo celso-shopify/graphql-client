@@ -86,6 +86,11 @@ module GraphQL
       def self.class_for(schema, type, cache)
         return cache[type] if cache[type]
 
+        # Unwrap NonNull and List types to get the underlying type
+        while type.non_null? || type.list?
+          type = type.of_type
+        end
+
         case type.kind.name
         when "INPUT_OBJECT"
           nil
